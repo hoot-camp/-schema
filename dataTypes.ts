@@ -1,7 +1,7 @@
 import type { $Key } from './@$key/itemTypes'
 import type { Title } from './@$title/itemTypes'
 
-export type $Module = $Key & {
+export type $Schema = $Key & {
     /**
      * @item.type string
      */
@@ -13,7 +13,7 @@ export type $Module = $Key & {
      * @maximum 9
      * @default 0
      */
-    unitPrice: number
+    price: number
 
     /**
      * @item.type timestamp

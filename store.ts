@@ -1,6 +1,10 @@
 import { create } from 'zustand'
 import { trpcSubscribers } from 'go.vote/@trpc/helpers'
-import { titleSetter, SetTitleStore, SetTitleSubscriber } from './@title/store'
+import {
+    titleSetter,
+    SetTitleStore,
+    SetTitleOnChangeSubscriber,
+} from './@title/store'
 
 import { $dataSetter, Set$DataStore } from './@$data/store'
 import type { $SchemaMainStore } from './store.main'
@@ -23,6 +27,6 @@ export const $schemaStore = use$SchemaStore
 export const trpc$SchemaSubscribers = trpcSubscribers<$SchemaStore>(
     $schemaStore,
     {
-        ...SetTitleSubscriber,
+        ...SetTitleOnChangeSubscriber,
     },
 )
