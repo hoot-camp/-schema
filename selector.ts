@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
-import { use$SchemaStore } from './store'
+import { use$DatumStore } from './store'
 
-export const select$Schema = ($key) =>
+export const select$Datum = ($key) =>
     createSelector(
         (state) => state.$data,
         (state) => state.$keyToIndex[$key],
@@ -9,4 +9,4 @@ export const select$Schema = ($key) =>
     )
 
 export const selectChosen$Key = (state) => state.chosen
-export const useChosen$KeySelector = () => use$SchemaStore(selectChosen$Key)
+export const useChosen$KeySelector = () => use$DatumStore(selectChosen$Key)
