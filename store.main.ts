@@ -2,6 +2,6 @@ import { $DatumData } from './dataTypes/data'
 
 export type $DatumMainStore = {
     $data: Array<$DatumData>
-    $keyToIndex: { [key: number]: number }
+    $keyListToIndex: { [key: string]: number }
     chosen: number
 }

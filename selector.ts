@@ -1,12 +1,13 @@
 import { createSelector } from 'reselect'
 import { use$DatumStore } from './store'
 
-export const select$Datum = ($key) =>
+export const select$Datum = ($keyJoinComma) =>
     createSelector(
         (state) => state.$data,
-        (state) => state.$keyToIndex[$key],
-        ($data, $key) => $data[$key],
+        (state) => state.$keyListToIndex[state.concatKeys($keyJoinComma)],
+        ($data, index) => $data[index],
     )
 
-export const selectChosen$Key = (state) => state.chosen
-export const useChosen$KeySelector = () => use$DatumStore(selectChosen$Key)
+export const selectChosen$KeyList = (state) => state.chosen
+export const useChosen$KeyListSelector = () =>
+    use$DatumStore(selectChosen$KeyList)

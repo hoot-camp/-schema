@@ -14,9 +14,13 @@ export type $DatumStore = $DatumMainStore & {
 
 export const use$DatumStore = create<$DatumStore>((set) => ({
     $data: [],
-    $keyToIndex: {},
+    $keyListToIndex: {},
     chosen: -1,
-    setChosen: ($key) => set((state) => ({ chosen: state.$keyToIndex[$key] })),
+    concatKeys: ($keyCommaList) => $keyPlusList,
+    setChosen: ($keyCommaList) =>
+        set((state) => ({
+            chosen: state.$keyListToIndex[state.concatKeys($keyCommaList)],
+        })),
     ...titleSetter(set),
 }))
 
