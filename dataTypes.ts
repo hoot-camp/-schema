@@ -1,6 +1,6 @@
 import type { $Key } from './@$key/itemTypes' //+
 
-export type $Datum = $Key & {
+export type $Datum = $KeyList & {
     /**
      * @item.type string
      */
