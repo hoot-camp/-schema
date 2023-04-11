@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect'
 import { use$DatumStore } from './store'
 
-export const select$Datum = ($keyJoinComma) =>
+export const select$Datum = ($keyList) =>
     createSelector(
         (state) => state.$data,
-        (state) => state.$keyListToIndex[state.concatKeys($keyJoinComma)],
+        (state) => state.$keyListToIndex[state.concatKeys($keyList)],
         ($data, index) => $data[index],
     )
 
