@@ -7,14 +7,14 @@ import {
 } from './@title/store'
 
 import { $dataSetter, Set$DataStore } from './@$data/store'
-import type { $SchemaMainStore } from './store.main'
+import type { $DatumMainStore } from './store.main'
 
-export type $SchemaStore = $SchemaMainStore & {
+export type $DatumStore = $DatumMainStore & {
     setChosen: (index: number) => void
 } & Set$DataStore &
     SetTitleStore
 
-export const use$SchemaStore = create<$SchemaStore>((set) => ({
+export const use$DatumStore = create<$DatumStore>((set) => ({
     $data: [],
     $keyToIndex: {},
     chosen: -1,
@@ -23,9 +23,9 @@ export const use$SchemaStore = create<$SchemaStore>((set) => ({
     ...titleSetter(set),
 }))
 
-export const $schemaStore = use$SchemaStore
-export const trpc$SchemaSubscribers = trpcSubscribers<$SchemaStore>(
-    $schemaStore,
+export const $datumStore = use$DatumStore
+export const trpc$SchemaOnChangeSubscribers = trpcSubscribers<$DatumStore>(
+    $datumStore,
     {
         ...SetTitleOnChangeSubscriber,
     },
