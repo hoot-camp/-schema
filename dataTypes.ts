@@ -1,5 +1,4 @@
 import type { $Key } from './@$key/itemTypes' //+
-import type { Title } from './@$title/itemTypes'
 
 export type $Datum = $Key & {
     /**
@@ -19,4 +18,4 @@ export type $Datum = $Key & {
      * @item.type timestamp
      */
     addedAt: Date
-} & Title
+}
