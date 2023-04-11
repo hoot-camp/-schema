@@ -1,13 +1,13 @@
 import { router } from 'go.vote/@trpc/trpc'
-import { router as $subDatum } from './$subDatum/trpcRouter'
+/**import-sub-datum*/
 import { trpcOnChangeRoute } from 'go.vote/@trpc/routes'
 import { name as emitName } from './settings'
-import { $dataRoute } from './@$data/trpc'
+/**import-trpc-route*/
 import { setTitleRoute } from './@title/trpc'
 
 export const trpcRouter = router({
-    $subDatum,
+    /**spread-sub-datum*/
     ...trpcOnChangeRoute(emitName),
-    ...$dataRoute,
+    /**spread-trpc-route*/
     ...setTitleRoute,
 })

@@ -6,20 +6,17 @@ import {
     SetTitleOnChangeSubscriber,
 } from './@title/store'
 
-import { $dataSetter, Set$DataStore } from './@$data/store'
 import type { $DatumMainStore } from './store.main'
 
 export type $DatumStore = $DatumMainStore & {
     setChosen: (index: number) => void
-} & Set$DataStore &
-    SetTitleStore
+} & SetTitleStore
 
 export const use$DatumStore = create<$DatumStore>((set) => ({
     $data: [],
     $keyToIndex: {},
     chosen: -1,
     setChosen: ($key) => set((state) => ({ chosen: state.$keyToIndex[$key] })),
-    ...$dataSetter(set),
     ...titleSetter(set),
 }))
 
