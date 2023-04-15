@@ -1,1 +1,4 @@
-/* @import './index.css'; */
+/** insert
+ *  @import '../$Schema/index.css';
+ *  in /go.vote/@styles/index.css
+ */

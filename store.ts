@@ -1,33 +1,53 @@
-import { create } from 'zustand'
-import { trpcSubscribers } from 'go.vote/@trpc/helpers'
+import { create } from "zustand"
+import { trpcSubscribers } from "go.vote/@trpc/helpers"
+import type { Flat } from "go.vote/@/types"
+
+import { AtD6 } from "./@d6"
+import { AtSub } from "./@sub"
+import { AtOfficeCode } from "./@officeCode"
+import { AtSeatCode } from "./@seatCode"
+import { AtChosenIndex, chosenIndexSetter } from "./@chosenIndex"
 import {
-    titleSetter,
-    SetTitleStore,
-    SetTitleOnChangeSubscriber,
-} from './@title/store'
+    AtOfficeTitle,
+    officeTitleSetter,
+    SetOfficeTitleOnChange,
+} from "./@officeTitle/store"
+import {
+    AtRecurring,
+    recurringSetter,
+    SetRecurringOnChange,
+} from "./@recurring/store"
+import {
+    AtTermYears,
+    termYearsSetter,
+    SetTermYearsOnChange,
+} from "./@termYears/store"
 
-import type { $DatumMainStore } from './store.main'
+export type DatumStore = Flat<
+    AtD6 &
+        AtSub &
+        AtOfficeCode &
+        AtSeatCode &
+        AtChosenIndex &
+        AtOfficeTitle &
+        AtRecurring &
+        AtTermYears
+>
 
-export type $DatumStore = $DatumMainStore & {
-    setChosen: (index: number) => void
-} & SetTitleStore
-
-export const use$DatumStore = create<$DatumStore>((set) => ({
-    $data: [],
-    $keyListToIndex: {},
-    chosen: -1,
-    concatKeys: ($keyList, ) => $keyList + ,
-    setChosen: ($keyList, ) =>
-        set((state) => ({
-            chosen: state.$keyListToIndex[state.concatKeys($keyList, )],
-        })),
-    ...titleSetter(set),
+export const useDatumStore = create<DatumStore>((set) => ({
+    ...chosenIndexSetter(set),
+    ...officeTitleSetter(set),
+    ...recurringSetter(set),
+    ...termYearsSetter(set),
 }))
 
-export const $datumStore = use$DatumStore
-export const trpc$SchemaOnChangeSubscribers = trpcSubscribers<$DatumStore>(
-    $datumStore,
+export const datumStore = useDatumStore
+export const trpcDatumOnChangeSubscribers = trpcSubscribers<DatumStore>(
+    datumStore,
     {
-        ...SetTitleOnChangeSubscriber,
-    },
+        ...SetOfficeTitleOnChange,
+        ...SetRecurringOnChange,
+        ...SetTermYearsOnChange,
+    }
 )
+
