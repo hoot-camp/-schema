@@ -1,2 +1,14 @@
 store.ts
 trpcRouter.ts
+data.ts
+data.zod.ts
+@data
+@officeTitle
+@recurring
+@termYears
+@d6.ts
+@index.ts
+@keys.ts
+@officeCode.ts
+@seatCode.ts
+@sub.ts
