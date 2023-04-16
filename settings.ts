@@ -1,38 +1,47 @@
 const string = 'string'
 const number = 'number'
-const key = 'key'
-const subSchema = 'subSchema'
-const item = 'item'
-export const name = '.kit-schema'
-export const data = {}
+const dataKey = true
 
-export const fields = {
-    d6: { usage: key, type: string },
-    sub: { usage: key, type: string },
-    officeCode: { usage: key, type: string },
-    seatCode: { usage: key, type: number },
-    sub1: { usage: subSchema },
-    sub2: { usage: subSchema },
+const setter = '/store'
+const trpcRoute = '/trpc'
+
+export const name = '.kit-schema'
+
+const keys = {
+    d6: { dataKey, type: string },
+    sub: { dataKey, type: string },
+    officeCode: { dataKey, type: string },
+    seatCode: { dataKey, type: number },
+}
+export const data = {
+    ...keys,
+    sub1: {
+        data: {
+            ...keys,
+        },
+    },
+    sub2: {
+        data: {
+            ...keys,
+        },
+    },
     chosenIndex: { type: number, setter: true },
     officeTitle: {
-        usage: item,
         type: string,
-        setter: '/store',
-        trpcRoute: '/trpc',
+        setter,
+        trpcRoute,
         trpcOnChangeSubscription: true,
     },
     recurring: {
-        usage: item,
         type: number,
-        setter: '/store',
-        trpcRoute: '/trpc',
+        setter,
+        trpcRoute,
         trpcOnChangeSubscription: true,
     },
     termYears: {
-        usage: item,
         type: number,
-        setter: '/store',
-        trpcRoute: '/trpc',
+        setter,
+        trpcRoute,
         trpcOnChangeSubscription: true,
     },
 }
@@ -41,5 +50,5 @@ if (
     typeof process !== 'undefined' &&
     process.argv[1]?.endsWith('/.kit-schema/settings.ts')
 ) {
-    console.log(JSON.stringify({ name, fields }))
+    console.log(JSON.stringify({ name, data }))
 }

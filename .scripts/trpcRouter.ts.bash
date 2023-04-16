@@ -1,4 +1,5 @@
-DIR=$(dirname ${BASH_SOURCE[0]})
+DIR=$(dirname $(realpath $BASH_SOURCE))
+BASE_NOEXT=$(basename $BASH_SOURCE | cut -d. -f1)
 
 declare -A usage
 declare -A trpcRoute
@@ -7,13 +8,14 @@ while IFS='|' read -r key usage trpcRoute; do
     usage[$key]=$usage
     trpcRoute[$key]=$trpcRoute
 done < <(kit settings $DIR/../settings.ts | 
-    jq -r ' .fields | to_entries[]  | '$(
+    jq -r ' .data | to_entries[]  | '$(
         kit jq-bsv .key .value.usage .value.trpcRoute
     ) | sed 's/\bnull\b//g'
 )
 
 LF=@LF@
 
+trpcRoutes="    ...\$dataRoute,$LF"
 for key in ${KEYS[@]}; do
     if [ "${usage[$key]}" = 'subSchema' ]; then
         importRouters+="import { trpcRouter as $key } from '.\/$key\/trpcRouter\'$LF"
@@ -34,4 +36,6 @@ sedOptions=(
     -e "s/$LF/\n/g"
 )
 
-sed "${sedOptions[@]}" $DIR/trpcRouter.src.ts
+sed "${sedOptions[@]}" $DIR/$BASE_NOEXT.src.ts | 
+    SETTINGS_DIR=$DIR kit filter-source |
+    kit prettier > $DIR/../$BASE_NOEXT.ts
