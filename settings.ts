@@ -1,20 +1,50 @@
 const string = 'string'
 const number = 'number'
 const dataKey = true
-
-const setter = '/store'
-const trpcRoute = '/trpc'
+const item = true
+const schema = true
+const store = '/store'
+const trpc = '/trpc'
+const trpcRouter = '/trpcRouter'
 
 export const name = '.kit-schema'
 
 const keys = {
-    d6: { dataKey, type: string },
-    sub: { dataKey, type: string },
-    officeCode: { dataKey, type: string },
-    seatCode: { dataKey, type: number },
+    d6: { dataKey, type: string, required: true },
+    sub: { dataKey, type: string, default: '' },
+    officeCode: { dataKey, type: string, default: '' },
+    seatCode: { dataKey, type: number, default: 0 },
 }
+
 export const data = {
     ...keys,
+    index: { type: number, store: true },
+    sub1: { schema, trpcRouter },
+    sub2: { schema, trpcRouter },
+    officeTitle: {
+        item,
+        type: string,
+        store,
+        trpc,
+        trpcOnChangeSubscription: true,
+    },
+    recurring: {
+        item,
+        type: number,
+        store,
+        trpc,
+        trpcOnChangeSubscription: true,
+    },
+    termYears: {
+        item,
+        type: number,
+        store,
+        trpc,
+        trpcOnChangeSubscription: true,
+    },
+}
+
+export const schemas = {
     sub1: {
         data: {
             ...keys,
@@ -25,30 +55,11 @@ export const data = {
             ...keys,
         },
     },
-    chosenIndex: { type: number, setter: true },
-    officeTitle: {
-        type: string,
-        setter,
-        trpcRoute,
-        trpcOnChangeSubscription: true,
-    },
-    recurring: {
-        type: number,
-        setter,
-        trpcRoute,
-        trpcOnChangeSubscription: true,
-    },
-    termYears: {
-        type: number,
-        setter,
-        trpcRoute,
-        trpcOnChangeSubscription: true,
-    },
 }
 
 if (
     typeof process !== 'undefined' &&
     process.argv[1]?.endsWith('/.kit-schema/settings.ts')
 ) {
-    console.log(JSON.stringify({ name, data }))
+    console.log(JSON.stringify({ name, data, schemas }))
 }

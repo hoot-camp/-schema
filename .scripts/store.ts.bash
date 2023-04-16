@@ -1,34 +1,32 @@
 DIR=$(dirname $(realpath $BASH_SOURCE))
-BASE_NOEXT=$(basename $BASH_SOURCE | cut -d. -f1)
+BASE=$(basename $BASH_SOURCE | cut -d. -f1)
 
-declare -A setter
+declare -A store
 declare -A onChange
-while IFS='|' read -r key setter onChange; do
+while IFS='|' read -r key store onChange; do
 	KEYS+=($key)
-    setter[$key]=$setter
+    store[$key]=$store
     onChange[$key]=$onChange
 done < <(kit settings $DIR | 
-    jq -r '.data | to_entries[] | select(.value.data == null) | '$(
-        kit jq-bsv .key .value.setter .value.trpcOnChangeSubscription
+    jq -r '.data | to_entries[] | select(.value.store) | '$(
+        kit jq-bsv .key .value.store .value.trpcOnChangeSubscription
     ) | sed 's/\bnull\b//g'
 )
 
 LF=@LF@
 AtItemList=$(array --map 'string --capitalize --prepend At' --join ' \& ' -- ${KEYS[@]})
 for key in ${KEYS[@]}; do
-    setterPath=
-    importSetter=
+    storePath=
+    importStore=
     importSetOnChange=
-    if [ ${setter[$key]} ]; then
-        setterList+="   ...${key}Setter(set),$LF"
-        importSetter=${key}Setter,
-        [[ ${setter[$key]} = 'true' ]] && setterPath='' || setterPath=${setter[$key]//\//\\\/}
-    fi
+    setterList+="   ...${key}Setter(set),$LF"
+    importStore=${key}Setter,
+    [ ${store[$key]} ] && storePath='' || storePath=${store[$key]//\//\\\/}
     if [ ${onChange[$key]} ]; then
         trpcOnChangeList+="        ...Set${key^}OnChange,$LF"
         importSetOnChange=Set${key^}OnChange
     fi
-    importList+="import { At${key^}, $importSetter$importSetOnChange} from \'.\/@${key}${setterPath}\'$LF"
+    importList+="import { At${key^}, $importStore$importSetOnChange} from \'.\/@${key}${storePath}\'$LF"
 done
 
 sedOptions=(
@@ -39,6 +37,6 @@ sedOptions=(
     -e "s/$LF/\n/g"
 )
 
-sed "${sedOptions[@]}" $DIR/$BASE_NOEXT.src.ts | 
-    SETTINGS_DIR=$DIR kit filter-source |
-    kit prettier > $DIR/../$BASE_NOEXT.ts
+sed "${sedOptions[@]}" $DIR/$BASE.src.ts | 
+    DIR=$DIR kit filter-source |
+    kit prettier > $DIR/../$BASE.ts

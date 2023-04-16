@@ -4,16 +4,14 @@ import type { Flat } from 'go.vote/@/types'
 
 $importList
 
-export type $DatumStore = Flat<$AtItemList>
+export type $SubSchemaStore = Flat<$AtItemList>
 
-export const use$DatumStore = create<$DatumStore>((set) => ({
+export const use$SubSchemaStore = create<$SubSchemaStore>((set) => ({
     $setterList,
 }))
 
-export const $datumStore = use$DatumStore
-export const trpc$DatumOnChangeSubscribers = trpcSubscribers<$DatumStore>(
-    $datumStore,
-    {
+export const $subSchemaStore = use$SubSchemaStore
+export const trpc$SubSchemaOnChangeSubscribers =
+    trpcSubscribers<$SubSchemaStore>($subSchemaStore, {
         $trpcOnChangeList,
-    },
-)
+    })

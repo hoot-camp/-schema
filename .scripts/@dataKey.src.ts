@@ -4,6 +4,6 @@ export type $Key = {
      * @item.type $type
      * @description KEY
      */
-    [$key]: $type
+    [$key]$optional: $type
 }
 export type $KeyValue = $Key[typeof $key]

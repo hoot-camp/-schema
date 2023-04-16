@@ -4,7 +4,7 @@ export type Sub = {
      * @item.type string
      * @description KEY
      */
-    [sub]: string
+    [sub]?: string
 }
 export type SubValue = Sub[typeof sub]
 

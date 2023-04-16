@@ -1,7 +1,7 @@
 import { selectDatumIndex } from "./@data/selectors"
 import produce from "immer"
 import { DatumStore, useDatumStore } from "./store"
-import { Keys } from "./@keys"
+import { Keys, composite } from "./@keys"
 
 const index = "index"
 const setIndex = "setIndex"
@@ -24,5 +24,10 @@ export function indexSetter(set) {
 }
 
 export const selectIndex = (state) => state[index]
-export const useIndexSelector = () => useDatumStore(selectIndex)
+export const useIndexValue = () => useDatumStore(selectIndex)
+
+export const selectDatumIndex =
+    (keys: Keys): ((state: DatumStore) => number) =>
+    (state) =>
+        selectDatumIndex(keys)(state)
 

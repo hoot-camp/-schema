@@ -2,48 +2,37 @@ import { create } from "zustand"
 import { trpcSubscribers } from "go.vote/@trpc/helpers"
 import type { Flat } from "go.vote/@/types"
 
-import { AtD6 } from "./@d6"
-import { AtSub } from "./@sub"
-import { AtOfficeCode } from "./@officeCode"
-import { AtSeatCode } from "./@seatCode"
-import { AtChosenIndex, chosenIndexSetter } from "./@chosenIndex"
+import { AtIndex, indexSetter } from "./@index"
 import {
     AtOfficeTitle,
     officeTitleSetter,
     SetOfficeTitleOnChange,
-} from "./@officeTitle/store"
+} from "./@officeTitle"
 import {
     AtRecurring,
     recurringSetter,
     SetRecurringOnChange,
-} from "./@recurring/store"
+} from "./@recurring"
 import {
     AtTermYears,
     termYearsSetter,
     SetTermYearsOnChange,
-} from "./@termYears/store"
+} from "./@termYears"
 
-export type DatumStore = Flat<
-    AtD6 &
-        AtSub &
-        AtOfficeCode &
-        AtSeatCode &
-        AtChosenIndex &
-        AtOfficeTitle &
-        AtRecurring &
-        AtTermYears
+export type SchemaStore = Flat<
+    AtIndex & AtOfficeTitle & AtRecurring & AtTermYears
 >
 
-export const useDatumStore = create<DatumStore>((set) => ({
-    ...chosenIndexSetter(set),
+export const useSchemaStore = create<SchemaStore>((set) => ({
+    ...indexSetter(set),
     ...officeTitleSetter(set),
     ...recurringSetter(set),
     ...termYearsSetter(set),
 }))
 
-export const datumStore = useDatumStore
-export const trpcDatumOnChangeSubscribers = trpcSubscribers<DatumStore>(
-    datumStore,
+export const schemaStore = useSchemaStore
+export const trpcSchemaOnChangeSubscribers = trpcSubscribers<SchemaStore>(
+    schemaStore,
     {
         ...SetOfficeTitleOnChange,
         ...SetRecurringOnChange,
