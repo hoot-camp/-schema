@@ -43,5 +43,5 @@ sedOptions=(
 )
 
 sed "${sedOptions[@]}" $DIR/$BASE.src.ts | 
-    DIR=$DIR kit filter-source |
+    DIR=$DIR kit filter |
     kit prettier > $DIR/../$BASE.ts
