@@ -21,7 +21,7 @@ for key in ${KEYS[@]}; do
     importSetOnChange=
     setterList+="   ...${key}Setter(set),$LF"
     importStore=${key}Setter,
-    [ ${store[$key]} ] && storePath='' || storePath=${store[$key]//\//\\\/}
+    [ ${store[$key]} = 'true' ] && storePath='' || storePath=${store[$key]//\//\\\/}
     if [ ${onChange[$key]} ]; then
         trpcOnChangeList+="        ...Set${key^}OnChange,$LF"
         importSetOnChange=Set${key^}OnChange

@@ -20,7 +20,6 @@ targetPath=$(realpath --relative-to=$(pwd) $CWD/..)
 
 for key in ${KEYS[@]}; do
     target=$targetPath/@$key/.scripts
-    echo $target
     mkdir -p $(dirname $target)
     degit hoot-camp/-data $path
 done
