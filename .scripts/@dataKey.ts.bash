@@ -7,10 +7,10 @@ while IFS='|' read -r key type required; do
 	KEYS+=($key)
     type[$key]=$type
     [ "$required" = 'true' ] && optional[$key]= || optional[$key]='?'
-done < <(kit settings $CWD | 
-    jq -r '.data | to_entries[] | select(.value.dataKey != null) | '$(
-        kit jq-bsv .key .value.type .value.required
-    ) | sed 's/\bnull\b//g'
+done < <(
+    kit settings $CWD | 
+    jq -r "$(kit jq-data-select .dataKey) | $(kit jq-dsv \| .key .type .required)" | 
+    sed 's/\bnull\b//g'
 )
 
 for key in ${KEYS[@]}; do
@@ -20,7 +20,6 @@ for key in ${KEYS[@]}; do
         -e "s/\$type/${type[$key]}/g"
         -e "s/\$optional/${optional[$key]}/g"
     )
-
     sed "${sedOptions[@]}" $CWD/$BASE.src.ts |
         kit prettier > $CWD/../@$key.ts
 done
