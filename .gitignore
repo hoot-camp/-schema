@@ -12,3 +12,7 @@ data.zod.ts
 @officeCode.ts
 @seatCode.ts
 @sub.ts
+@data
+@included
+!@data/.scripts
+!@included/.scripts

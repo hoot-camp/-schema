@@ -1,0 +1,6 @@
+[submodule "@data/.scripts"]
+	path = @data/.scripts
+	url = git@github.com:hoot-camp/-data.git
+[submodule "@included/.scripts"]
+	path = @included/.scripts
+	url = git@github.com:hoot-camp/-included.git
