@@ -7,3 +7,4 @@ target=$CWD/../@${data,}/.scripts
 mkdir -p $target
 path=$(realpath --relative-to=$(pwd) $target)
 degit hoot-camp/-data $path
+wf $path/*.bash | xargs -n1 bash

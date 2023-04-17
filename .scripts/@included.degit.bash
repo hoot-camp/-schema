@@ -22,5 +22,6 @@ for key in ${KEYS[@]}; do
     target=$targetPath/@$key/.scripts
     mkdir -p $(dirname $target)
     degit hoot-camp/-included $target
+    wf $target/*.bash | xargs -n1 bash
 done
 
