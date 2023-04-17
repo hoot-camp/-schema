@@ -1,4 +1,3 @@
-import { select$SubSchemaIndex } from './@$data/selectors'
 import produce from 'immer'
 import { $SubSchemaStore, use$SubSchemaStore } from './store'
 import { Keyring, composite } from './@keyring'
