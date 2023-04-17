@@ -1,5 +1,6 @@
 CWD=$(dirname $(realpath $BASH_SOURCE))
 BASE=$(basename $BASH_SOURCE | cut -d. -f1)
+DATA=$(pathname data-key $CWD)
 
 declare -A trpc
 declare -A trpcRouter
@@ -8,7 +9,7 @@ while IFS='|' read -r key trpc trpcRouter; do
     trpc[$key]=$trpc
     trpcRouter[$key]=$trpcRouter
 done < <(kit settings $CWD/../settings.ts | 
-    jq -r "$(kit jq-data-select .trpc or .trpcRouter) | $(kit jq-bsv .key .trpc .trpcRouter)" | 
+    jq -r "$(kit jq --data $DATA --select '.trpc or .trpcRouter' -- .key .trpc .trpcRouter)" | 
     sed 's/\bnull\b//g'
 )
 

@@ -1,5 +1,5 @@
 CWD=$(dirname $(realpath $BASH_SOURCE))
-
+DATA=$(pathname data-key $CWD)
 declare -A type
 declare -A required
 declare -A default
@@ -8,7 +8,7 @@ while IFS='|' read -r key type required default; do
     type[$key]=$type
 done < <(
     kit settings $CWD | 
-    jq -r "$(kit jq-data-select .included) | $(kit jq-bsv .key .type)"
+    jq -r "$(kit jq --data $DATA --select .included -- .key .type)"
 )
 
 

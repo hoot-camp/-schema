@@ -1,5 +1,6 @@
 CWD=$(dirname $(realpath $BASH_SOURCE))
 BASE=$(basename $BASH_SOURCE | cut -d. -f1)
+DATA=$(pathname data-key $CWD)
 
 declare -A type
 declare -A optional
@@ -9,7 +10,7 @@ while IFS='|' read -r key type required; do
     [ "$required" = 'true' ] && optional[$key]= || optional[$key]='?'
 done < <(
     kit settings $CWD | 
-    jq -r "$(kit jq-data-select .dataKey) | $(kit jq-dsv \| .key .type .required)" | 
+    jq -r "$(kit jq --data $DATA --select .dataKey -- .key .type .required)" | 
     sed 's/\bnull\b//g'
 )
 
