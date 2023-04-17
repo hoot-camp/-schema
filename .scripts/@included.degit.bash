@@ -12,7 +12,6 @@ done < <(
     jq -r "$(kit jq --data $DATA --select .included -- .key .type)"
 )
 
-
 subSchema=$(pathname sub-schema $CWD)
 [ $subSchema = '.kit-schema' ] && subSchema=schema
 data=$(string --plural -- $subSchema)
