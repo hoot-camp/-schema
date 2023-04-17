@@ -1,4 +1,4 @@
-DIR=$(dirname $(realpath $BASH_SOURCE))
+CWD=$(dirname $(realpath $BASH_SOURCE))
 BASE=$(basename $BASH_SOURCE | cut -d. -f1)
 
 declare -A store
@@ -7,7 +7,7 @@ while IFS='|' read -r key store onChange; do
 	KEYS+=($key)
     store[$key]=$store
     onChange[$key]=$onChange
-done < <(kit settings $DIR | 
+done < <(kit settings $CWD | 
     jq -r '.data | to_entries[] | select(.value.store) | '$(
         kit jq-bsv .key .value.store .value.trpcOnChangeSubscription
     ) | sed 's/\bnull\b//g'
@@ -37,6 +37,6 @@ sedOptions=(
     -e "s/$LF/\n/g"
 )
 
-sed "${sedOptions[@]}" $DIR/$BASE.src.ts | 
-    DIR=$DIR kit filter |
-    kit prettier > $DIR/../$BASE.ts
+sed "${sedOptions[@]}" $CWD/$BASE.src.ts | 
+    CWD=$CWD kit filter |
+    kit prettier > $CWD/../$BASE.ts

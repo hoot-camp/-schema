@@ -5,6 +5,7 @@ data.zod.ts
 @data/
 @officeTitle/
 @recurring/
+@schemata/
 @termYears/
 @d6.ts
 @index.ts

@@ -1,4 +1,3 @@
-DIR=$(dirname $(realpath $BASH_SOURCE))
-BASE_NOEXT=$(basename $BASH_SOURCE | cut -d. -f1)
-
-cat $DIR/$BASE_NOEXT.src.ts | DIR=$DIR kit filter | kit prettier > $DIR/../$BASE_NOEXT.ts
+CWD=$(dirname $(realpath $BASH_SOURCE))
+BASE=$(basename $BASH_SOURCE | cut -d. -f1)
+kit filter --cwd $CWD $BASE.src.ts | kit prettier > $CWD/../$BASE.ts

@@ -1,8 +1,8 @@
 import { compositeKeys, splitKey } from 'go.vote/@/helpers'
 import type { Flat } from 'go.vote/@/types'
-$importKeys
+$importKeyList
 
-export type Keyring = Flat<$KeyList>
+export type Keyring = Flat<$KeyListAnd>
 
 export const composite = ({ $keyWithDefaultListComma }: Keyring): string =>
     compositeKeys($keyListComma)
@@ -11,7 +11,7 @@ export const ring = ({ $keyWithDefaultListComma }: Keyring): Keyring => ({
     $keyListComma,
 })
 
-export const dataKeyToKeyring = (dataKey: string) => {
+export const uncombine = (dataKey: string) => {
     const [$keyListComma] = splitKey(dataKey)
     return { $keyListComma }
 }

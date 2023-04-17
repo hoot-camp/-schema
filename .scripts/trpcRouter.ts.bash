@@ -1,4 +1,4 @@
-DIR=$(dirname $(realpath $BASH_SOURCE))
+CWD=$(dirname $(realpath $BASH_SOURCE))
 BASE=$(basename $BASH_SOURCE | cut -d. -f1)
 
 declare -A trpc
@@ -7,7 +7,7 @@ while IFS='|' read -r key trpc trpcRouter; do
 	KEYS+=($key)
     trpc[$key]=$trpc
     trpcRouter[$key]=$trpcRouter
-done < <(kit settings $DIR/../settings.ts | 
+done < <(kit settings $CWD/../settings.ts | 
     jq -r "$(kit jq-data-select .trpc or .trpcRouter) | $(kit jq-bsv .key .trpc .trpcRouter)" | 
     sed 's/\bnull\b//g'
 )
@@ -42,6 +42,6 @@ sedOptions=(
     -e "s/$LF/\n/g"
 )
 
-sed "${sedOptions[@]}" $DIR/$BASE.src.ts | 
-    DIR=$DIR kit filter |
-    kit prettier > $DIR/../$BASE.ts
+sed "${sedOptions[@]}" $CWD/$BASE.src.ts | 
+    kit filter --cwd $CWD |
+    kit prettier > $CWD/../$BASE.ts

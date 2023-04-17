@@ -1,7 +1,7 @@
 const string = 'string'
 const number = 'number'
 const dataKey = true
-const item = true
+const included = true
 const schema = true
 const store = '/store'
 const trpc = '/trpc'
@@ -22,21 +22,21 @@ export const data = {
     sub1: { schema, trpcRouter },
     sub2: { schema, trpcRouter },
     officeTitle: {
-        item,
+        included,
         type: string,
         store,
         trpc,
         trpcOnChangeSubscription: true,
     },
     recurring: {
-        item,
+        included,
         type: number,
         store,
         trpc,
         trpcOnChangeSubscription: true,
     },
     termYears: {
-        item,
+        included,
         type: number,
         store,
         trpc,
