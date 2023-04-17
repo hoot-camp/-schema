@@ -2,7 +2,6 @@ store.ts
 trpcRouter.ts
 data.ts
 data.zod.ts
-@data/
 @officeTitle/
 @recurring/
 @schemata/
