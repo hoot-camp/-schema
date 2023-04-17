@@ -1,5 +1,6 @@
 CWD=$(dirname $(realpath $BASH_SOURCE))
 DATA=$(pathname data-key $CWD)
+
 declare -A type
 declare -A required
 declare -A default
