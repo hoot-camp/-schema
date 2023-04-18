@@ -8,13 +8,22 @@ while IFS='|' read -r key trpc trpcRouter; do
 	KEYS+=($key)
     trpc[$key]=$trpc
     trpcRouter[$key]=$trpcRouter
-done < <(kit settings $CWD/../settings.ts | 
+done < <(kit settings $CWD/.. | 
     jq -r "$(kit jq --data $DATA --select '.trpc or .trpcRouter' -- .key .trpc .trpcRouter)" | 
     sed 's/\bnull\b//g'
 )
 
+sedOptions=()
+onChageSubscription=$(kit settings $CWD/.. | jq -r "$DATA | select(.trpcOnChangeSubscription)" | wc -l)
+if [ $onChageSubscription -eq 0 ]; then
+    sedOptions+=(-e "/import { trpcOnChangeRoute/d")
+    sedOptions+=(-e "/import { name as emitName/d")
+    sedOptions+=(-e "/trpcOnChangeRoute/d")
+fi
+
 LF=@LF@
 
+importRouters=()
 trpcRouters=()
 trpcRoutes=("...\$dataRoute,")
 for key in ${KEYS[@]}; do
@@ -35,7 +44,7 @@ importRoutesSrc=$(array --join $LF -- "${importRoutes[@]}")
 trpcRoutersSrc=$(array --join $LF -- "${trpcRouters[@]}")
 trpcRoutesSrc=$(array --join $LF -- "${trpcRoutes[@]}")
 
-sedOptions=(
+sedOptions+=(
     -e "s/\$importRouters/$importRoutersSrc/"
     -e "s/\$importItemRoutes/$importRoutesSrc/"
     -e "s/^\s*\$trpcRouters,/$trpcRoutersSrc/"

@@ -1,8 +1,7 @@
 import { router } from 'go.vote/@trpc/trpc'
+import { trpcOnChangeRoute } from 'go.vote/@trpc/routes'
 import { name as emitName } from './settings'
 $importRouters
-import { trpcOnChangeRoute } from 'go.vote/@trpc/routes'
-
 import { $dataRoute } from './@$data/trpc'
 $importItemRoutes
 
