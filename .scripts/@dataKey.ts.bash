@@ -23,5 +23,5 @@ for key in ${KEYS[@]}; do
         -e "s/\$optional/${optional[$key]}/g"
     )
     sed "${sedOptions[@]}" $SRC/$BASE.src.ts |
-        kit prettier > $CWD/@$key.ts
+        kit write --prettier --cwd $CWD --base @$key --format ts
 done

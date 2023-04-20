@@ -25,4 +25,5 @@ sedOptions+=(
     -e "s/$LF/\\n/g"
 )
 
-sed "${sedOptions[@]}" $SRC/$BASE.src.ts > $CWD/$BASE.ts
+sed "${sedOptions[@]}" $SRC/$BASE.src.ts | 
+    kit write --cwd $CWD --base $BASE --format ts

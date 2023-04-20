@@ -51,4 +51,6 @@ if [ ! $ON_CHANGE ]; then
   sedOptions+=(-e "s/export const trpc\$SubSchemaOnChangeSubscribers.*\})//")
 fi
 
-sed "${sedOptions[@]}" $SRC/$BASE.src.ts | kit filter --cwd $CWD | kit prettier > $CWD/$BASE.ts
+sed "${sedOptions[@]}" $SRC/$BASE.src.ts | 
+    kit filter --cwd $CWD | 
+    kit write --prettier --cwd $CWD --base $BASE --format ts

@@ -55,4 +55,4 @@ sedOptions+=(
 
 sed "${sedOptions[@]}" $SRC/$BASE.src.ts | 
     kit filter --cwd $CWD |
-    kit prettier > $CWD/$BASE.ts
+    kit write --prettier --cwd $CWD --base $BASE --format ts
