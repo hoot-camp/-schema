@@ -2,6 +2,8 @@ store.ts
 trpcRouter.ts
 data.ts
 data.zod.ts
+@data
+@districtTitle
 @officeTitle/
 @recurring/
 @schemata/
@@ -10,6 +12,10 @@ data.zod.ts
 @index.ts
 @keyring.ts
 @officeCode.ts
+@county.ts
+@dv.ts
+@ix.ts
+dataTypes.ts
 @seatCode.ts
 @sub.ts
 @data

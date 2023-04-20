@@ -1,4 +1,5 @@
-CWD=$(dirname $(realpath $BASH_SOURCE))
+SRC=$(dirname $(realpath $BASH_SOURCE))
+: ${CWD:=$SRC/..}
 BASE=$(basename $BASH_SOURCE | cut -d. -f1)
 DATA=$(pathname data-key $CWD)
 
@@ -8,13 +9,13 @@ while IFS='|' read -r key trpc trpcRouter; do
 	KEYS+=($key)
     trpc[$key]=$trpc
     trpcRouter[$key]=$trpcRouter
-done < <(kit settings $CWD/.. | 
+done < <(kit settings $CWD | 
     jq -r "$(kit jq --data $DATA --select '.trpc or .trpcRouter' -- .key .trpc .trpcRouter)" | 
     sed 's/\bnull\b//g'
 )
 
 sedOptions=()
-onChageSubscription=$(kit settings $CWD/.. | jq -r "$DATA | select(.trpcOnChangeSubscription)" | wc -l)
+onChageSubscription=$(kit settings $CWD | jq -r "$DATA | select(.trpcOnChangeSubscription)" | wc -l)
 if [ $onChageSubscription -eq 0 ]; then
     sedOptions+=(-e "/import { trpcOnChangeRoute/d")
     sedOptions+=(-e "/import { name as emitName/d")
@@ -52,6 +53,6 @@ sedOptions+=(
     -e "s/$LF/\n/g"
 )
 
-sed "${sedOptions[@]}" $CWD/$BASE.src.ts | 
+sed "${sedOptions[@]}" $SRC/$BASE.src.ts | 
     kit filter --cwd $CWD |
-    kit prettier > $CWD/../$BASE.ts
+    kit prettier > $CWD/$BASE.ts

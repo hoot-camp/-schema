@@ -1,4 +1,5 @@
-CWD=$(dirname $(realpath $BASH_SOURCE))
+SRC=$(dirname $(realpath $BASH_SOURCE))
+: ${CWD:=$SRC/..}
 BASE=$(basename $BASH_SOURCE | cut -d. -f1)
 DATA=$(pathname data-key $CWD)
 
@@ -24,4 +25,4 @@ sedOptions+=(
     -e "s/$LF/\\n/g"
 )
 
-sed "${sedOptions[@]}" $CWD/$BASE.src.ts > $CWD/../$BASE.ts
+sed "${sedOptions[@]}" $SRC/$BASE.src.ts > $CWD/$BASE.ts

@@ -1,4 +1,5 @@
-CWD=$(dirname $(realpath $BASH_SOURCE))
+SRC=$(dirname $(realpath $BASH_SOURCE))
+: ${CWD:=$SRC/..}
 BASE=$(basename $BASH_SOURCE | cut -d. -f1)
 DATA=$(pathname data-key $CWD)
 
@@ -21,6 +22,6 @@ for key in ${KEYS[@]}; do
         -e "s/\$type/${type[$key]}/g"
         -e "s/\$optional/${optional[$key]}/g"
     )
-    sed "${sedOptions[@]}" $CWD/$BASE.src.ts |
-        kit prettier > $CWD/../@$key.ts
+    sed "${sedOptions[@]}" $SRC/$BASE.src.ts |
+        kit prettier > $CWD/@$key.ts
 done

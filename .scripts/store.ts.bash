@@ -1,4 +1,5 @@
-CWD=$(dirname $(realpath $BASH_SOURCE))
+SRC=$(dirname $(realpath $BASH_SOURCE))
+: ${CWD:=$SRC/..}
 BASE=$(basename $BASH_SOURCE | cut -d. -f1)
 DATA=$(pathname data-key $CWD)
 
@@ -50,4 +51,4 @@ if [ ! $ON_CHANGE ]; then
   sedOptions+=(-e "s/export const trpc\$SubSchemaOnChangeSubscribers.*\})//")
 fi
 
-sed "${sedOptions[@]}" $CWD/$BASE.src.ts | kit filter --cwd $CWD | kit prettier > $CWD/../$BASE.ts
+sed "${sedOptions[@]}" $SRC/$BASE.src.ts | kit filter --cwd $CWD | kit prettier > $CWD/$BASE.ts

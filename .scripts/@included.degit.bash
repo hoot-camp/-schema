@@ -1,4 +1,4 @@
-CWD=$(dirname $(realpath $BASH_SOURCE))
+: ${CWD:=$(dirname $(realpath $BASH_SOURCE))/..}
 DATA=$(pathname data-key $CWD)
 
 declare -A type
@@ -16,7 +16,7 @@ subSchema=$(pathname sub-schema $CWD)
 [ $subSchema = '.kit-schema' ] && subSchema=schema
 data=$(string --plural -- $subSchema)
 
-targetPath=$(realpath --relative-to=$(pwd) $CWD/..)
+targetPath=$(realpath --relative-to=$(pwd) $CWD)
 
 for key in ${KEYS[@]}; do
     target=$targetPath/@$key/.scripts
