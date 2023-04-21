@@ -2,7 +2,7 @@ import produce from 'immer'
 import { $SubSchemaData } from 'go.vote/.kit-schema/data'
 import { $SubSchemaStore } from 'go.vote/.kit-schema/store'
 import { $data, dataKeyToIndex, set$Data } from './config'
-import { Keys, composite } from 'go.vote/.kit-schema/@keys'
+import { Keyring, composite } from 'go.vote/.kit-schema/@keyring'
 
 export type At$SubSchemas = {
     [$data]: Array<$SubSchemaData>
@@ -19,7 +19,7 @@ export function $subSchemasSetter(set) {
                 produce<$SubSchemaStore>((state) => {
                     state[$data] = incoming
                     state[dataKeyToIndex] = incoming.reduce(
-                        (a, keys: Keys, i) => {
+                        (a, keyring: Keyring, i) => {
                             a[composite(keys)] = i
                             return a
                         },

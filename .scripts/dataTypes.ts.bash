@@ -18,8 +18,9 @@ done
 
 LF=@@LF@@
 importTypesSrc=$(array --join $LF -- "${importTypes[@]}")
-
+subschema=$(pathname subschema $CWD)
 sedOptions+=(
+    -e "s/\$Subschema/${subschema^}/g"
     -e "s/\$TypeList/$TypeList/"
     -e "s/^\$importTypes/$importTypesSrc/"
     -e "s/$LF/\\n/g"

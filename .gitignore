@@ -20,5 +20,7 @@ dataTypes.ts
 @sub.ts
 @data
 @included
+!.scripts/@data
+!.scripts/@included
 !@data/.scripts
 !@included/.scripts
