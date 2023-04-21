@@ -53,4 +53,4 @@ fi
 
 sed "${sedOptions[@]}" $SRC/$BASE.src.ts | 
     kit filter --cwd $CWD | 
-    kit write --kit --prettier --cwd $CWD --base $BASE --format ts
+    kit write --kit-export --prettier --cwd $CWD --base $BASE --format ts
