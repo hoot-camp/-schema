@@ -11,7 +11,7 @@ while IFS='|' read -r key type required default; do
     type[$key]=$type
 done < <(
     kit settings $CWD | 
-    jq -r "$(kit jq --data $DATA --select .included -- .key .type)"
+    kit jq --data $DATA --select .included -- .key .type
 )
 
 subSchema=$(pathname sub-schema $CWD)

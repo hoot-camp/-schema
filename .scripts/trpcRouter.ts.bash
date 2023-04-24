@@ -10,7 +10,7 @@ while IFS='|' read -r key trpc trpcRouter; do
     trpc[$key]=$trpc
     trpcRouter[$key]=$trpcRouter
 done < <(kit settings $CWD | 
-    jq -r "$(kit jq --data $DATA --select '.trpc or .trpcRouter' -- .key .trpc .trpcRouter)" | 
+    kit jq --data $DATA --select '.trpc or .trpcRouter' -- .key .trpc .trpcRouter | 
     sed 's/\bnull\b//g'
 )
 

@@ -11,7 +11,7 @@ while IFS='|' read -r key type required; do
     [ "$required" = 'true' ] && optional[$key]= || optional[$key]='?'
 done < <(
     kit settings $CWD | 
-    jq -r "$(kit jq --data $DATA --select .dataKey -- .key .type .required)" | 
+    kit jq --data $DATA --select .dataKey -- .key .type .required | 
     sed 's/\bnull\b//g'
 )
 

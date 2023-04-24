@@ -6,7 +6,7 @@ DATA=$(pathname data-key $CWD)
 while IFS='|' read -r key; do
 	KEYS+=($key)
 done < <(kit settings $CWD | 
-    jq -r "$(kit jq --data $DATA --select '.included' -- .key)" |
+    kit jq --data $DATA --select '.included' -- .key |
     sed 's/\bnull\b//g'
 )
 
