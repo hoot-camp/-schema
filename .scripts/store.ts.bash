@@ -10,7 +10,7 @@ while IFS='|' read -r key store onChange; do
     store[$key]=$store
     onChange[$key]=$onChange
 done < <(kit settings $CWD | 
-    kit jq --data $DATA --select .store -- .key .store .trpcOnChangeSubscription |
+    kit jq --data $DATA --select .store -- .key .store .trpcOnChangeSubs |
     sed 's/\bnull\b//g'
 )
 

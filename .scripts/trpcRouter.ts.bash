@@ -15,8 +15,8 @@ done < <(kit settings $CWD |
 )
 
 sedOptions=()
-onChageSubscription=$(kit settings $CWD | jq -r "$DATA | select(.trpcOnChangeSubscription)" | wc -l)
-if [ $onChageSubscription -eq 0 ]; then
+onChangeSubs=$(kit settings $CWD | jq -r "$DATA | select(.trpcOnChangeSubs)" | wc -l)
+if [ $onChangeSubs -eq 0 ]; then
     sedOptions+=(-e "/import { trpcOnChangeRoute/d")
     sedOptions+=(-e "/import { name as emitName/d")
     sedOptions+=(-e "/trpcOnChangeRoute/d")
