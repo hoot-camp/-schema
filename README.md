@@ -1,0 +1,9 @@
+-   creating a submodule using dataKey WITHOUT generating keyring
+-   bypass composite keys
+-   dataKeyToIndex -> idToIndex
+-   remove destructured default when only one key exists
+-   remove SetIdType for one key
+-   store remove destructured default
+-   store should have keyMapping without dataKey
+-   selectors need to be re-written for single keys
+-   trpc remove destructed default
